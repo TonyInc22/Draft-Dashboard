@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="countdown-timers">
+        <div class="countdown-container">
+            <div class="team-info">
+                <div class="team-logo" id='team_pic1'></div>
+                <div class="team-name" id='team_name1'></div>
+            </div>
+            <div class="countdown">
+				<div class="round">PREVIOUS PICK</div><br>
+                <div class="round-info">
+                    <div class="round">ROUND <font id='round_num1'></font></div>
+                    <div class="pick">PICK <font id='pick_num1'></font></div>
+                </div>
+				<div class="round_res" id="prev_pick">PREVIOUS PICK</div><br>
+            </div>
+        </div>
+
+        <div class="countdown-container">
+            <div class="team-info">
+                <div class="team-logo" id='team_pic'></div>
+                <div class="team-name" id='team_name'></div>
+            </div>
+            <div class="countdown">
+                <div class="round-info">
+                    <div class="round">ROUND <font id='round_num'></font></div>
+                    <div class="pick">PICK <font id='pick_num'></font></div>
+                </div>
+                <div class="timer" id="timer">5:00</div>
+            </div>
+        </div>
+
+        <div class="countdown-container">
+            <div class="team-info">
+                <div class="team-logo" id='team_pic3'></div>
+                <div class="team-name" id='team_name3'></div>
+            </div>
+            <div class="countdown">
+				<div class="round">PICKING NEXT</div><br>
+                <div class="round-info">
+                    <div class="round">ROUND <font id='round_num3'></font></div>
+                    <div class="pick">PICK <font id='pick_num3'></font></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<audio id="mySound" src="pick_is_in_audio.m4a"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+<style>
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+body {
+    background-color: #1a1a1a;
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+}
+
+.countdown-timers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.countdown-container {
+    display: flex;
+    align-items: center;
+    background-color: #141414;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 600px;
+}
+
+.team-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.team-logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.team-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.countdown {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.round-info {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.round, .pick {
+    background-color: #d0343a;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.round_res {
+    background-color: #007FFF;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.timer {
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.time-up {
+    animation: flash 1s infinite;
+    color: red;
+}
+
+</style>
+    <!-- JS here -->
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/ajax-form.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/scrollIt.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <!-- <script src="js/gijgo.min.js"></script> -->
+    <script src="js/range.js"></script>
+	
+	<!-- QR Code Scanner -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+
+    <!--contact js-->
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+<script>
+// Set the time limit (e.g., 5 minutes)
+let timeInMinutes = .2;
+let time = timeInMinutes * 60;
+time = time - 10;
+
+const countdownElement = document.getElementById('timer');
+
+function updateTimer() {
+    const minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    countdownElement.innerHTML = `${minutes}:${seconds}`;
+    time--;
+
+    if (time < 0) {
+        clearInterval(timerInterval);
+        countdownElement.innerHTML = "PICK IS IN!";
+		countdownElement.classList.add("time-up");
+			var sound = document.getElementById("mySound");
+			document.body.addEventListener("mousemove", function () {
+				//sound.play()
+			})
+			// Get the audio element
+			
+			// Play the sound
+			//sound.play();
+		setTimeout(function () {
+			//window.location = window.location;
+		}, 5000);
+    }
+}
+
+const timerInterval = setInterval(updateTimer, 1000);
+
+function get_next_up() {
+	var draft_order = ["UrAvgFantasy", "MrsStinky07", "munkeric236", "kirbiegaske", "TonyInc22", "Tora2820", "HarbaughsaDBag", "AyeJay07", "mhanks22", "alexwhitsell", "RithikP", "Mikey1670"]
+	var leagueInfo = JSON.parse('[{"avatar":"a9a588d0104b86ddf473e455aeb4348d","display_name":"RithikP","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mention_pn":"on","team_name":"Rithik’s Team"},"settings":null,"user_id":"470015968022622208"},{"avatar":"1aefabfa5b809f39930f5c30e4cb05de","display_name":"TonyInc22","is_bot":false,"is_owner":true,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","archived":"off","avatar":"https://sleepercdn.com/uploads/f8ed17b212f8c49192e918d09c128d85.jpg","mention_pn":"on","team_name":"Steelers Nation Lets Weld"},"settings":null,"user_id":"609877024558870528"},{"avatar":"7621257c126384c37dcb2da126aae7d6","display_name":"Tora2820","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mention_pn":"on","team_name":"Thanks for the donations"},"settings":null,"user_id":"609879805533454336"},{"avatar":"831786149b6b8ed60430ebe518ce8e60","display_name":"HarbaughsaDBag","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","avatar":"https://sleepercdn.com/uploads/0b458a5c70948c9d530b24cf5218ccdd.jpg","mention_pn":"on","team_name":"Playoff Lamar"},"settings":null,"user_id":"728425409204600832"},{"avatar":"3118dc870bd3c09b0ce27feccb5e7f61","display_name":"kirbiegaske","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mascot_message":"off","mention_pn":"on","player_like_pn":"on","player_nickname_update":"off","team_name":"Denny-n-Kirbie","team_name_update":"off","trade_block_pn":"on","transaction_commissioner":"on","transaction_free_agent":"on","transaction_trade":"on","transaction_waiver":"on","user_message_pn":"off"},"settings":null,"user_id":"729378458488164352"},{"avatar":"f0edbf4278f53f9425db175073df6584","display_name":"UrAvgFantasy","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","avatar":"https://sleepercdn.com/uploads/5eabcbb45746636e44d42340f98ecd2f.jpg","mention_pn":"on","team_name":"Levi’s Legion"},"settings":null,"user_id":"729441511070101504"},{"avatar":"f0edbf4278f53f9425db175073df6584","display_name":"munkeric236","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","avatar":"https://sleepercdn.com/images/v2/avatars/avatar_default_green.webp","mention_pn":"on","team_name":"Jack Me Goff"},"settings":null,"user_id":"866107388737007616"},{"avatar":"230d01be0baa3f455592401e0775e2c7","display_name":"MrsStinky07","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","league_report_pn":"on","mascot_message":"on","mention_pn":"on","player_like_pn":"on","player_nickname_update":"on","team_name":"The Pen Is Blue!","team_name_update":"on","trade_block_pn":"on","transaction_commissioner":"on","transaction_free_agent":"on","transaction_trade":"on","transaction_waiver":"on","user_message_pn":"on"},"settings":null,"user_id":"867966756109578240"},{"avatar":"e7af4deab0289b4f5505646424895246","display_name":"alexwhitsell","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","avatar":"https://sleepercdn.com/uploads/55bfb0bafdc614658b0f125f655c9769.jpg","mention_pn":"on","team_name":"Zay My Name"},"settings":null,"user_id":"984647991715856384"},{"avatar":"4f4090e5e9c3941414db40a871e3e909","display_name":"Mikey1670","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mention_pn":"on","team_name":"Thats what cheesehead"},"settings":null,"user_id":"1103763538251857920"},{"avatar":"15d7cf259bc30eab8f6120f45f652fb6","display_name":"mhanks22","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","avatar":"https://sleepercdn.com/uploads/85f9ff30e88511f66b289717bf6d5675.jpg","mention_pn":"on","team_name":"Bulldogs "},"settings":null,"user_id":"1108211354948857856"},{"avatar":"b3338675f635c2c1f42b469621d38ec6","display_name":"AyeJay07","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","mention_pn":"on","team_name":"Hot Chubb Time Machine"},"settings":null,"user_id":"1122705578033258496"}]');
+	
+	$.ajax({
+		type: 'GET',
+		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		success: function(response) {
+			console.log(response);
+			console.log(response[response.length-1].pick_no);
+
+			console.log(response[response.length-1].round);
+				var round_num_html = document.getElementById("round_num");
+				round_num_html.innerHTML = response[response.length-1].round;
+				
+			console.log(response.length);
+			var temp = 0;
+			var holder = 1;
+			for (let i = 1; i < response.length; i++) {
+				if(holder == 1) {
+					temp++;
+				} else {
+					temp--;
+				}
+				if(temp == 13) {
+					holder = 0;
+					temp = 12;
+				} else if(temp == 1) {
+					holder = 1;
+					temp = 1;
+				}
+				console.log(temp);
+				var pick_num_html = document.getElementById("pick_num");
+				pick_num_html.innerHTML = temp;
+				
+				var team_name_html = document.getElementById("team_name");
+				team_name_html.innerHTML = draft_order[temp-1];
+				leagueInfo.forEach(val1 => {
+					if(draft_order[temp-1] == val1.display_name){
+						const storeContent = document.getElementById('team_pic');
+						if(val1.metadata.avatar == null) {
+							var team_icon = 'https://styles.redditmedia.com/t5_2t3dhp/styles/communityIcon_73kdw3ry2r3d1.png'
+						} else {
+							var team_icon = val1.metadata.avatar
+						}
+						storeContent.innerHTML = '<img src="'+team_icon+'" alt="'+val1.metadata.team_name+'">'
+					}
+				});
+				
+				/* Historical */
+				
+				var pick_num_html1 = document.getElementById("pick_num1");
+				var old_temp = temp - 1;
+				if((temp-1) == 0) {
+					old_temp = 1;
+				} else if (temp-1 == 11 && holder == 0) {
+					old_temp = 13;
+				}
+				pick_num_html1.innerHTML = old_temp;
+				
+				var pick_num_html3 = document.getElementById("pick_num3");
+				var new_temp = temp + 1;
+				if((temp+1) == 13) {
+					new_temp = 12;
+				} else if (temp+1 == 2 && holder == 1) {
+					new_temp = 1;
+				}
+				pick_num_html3.innerHTML = new_temp;
+				
+				var round_num_html1 = document.getElementById("round_num1");
+				if(temp-1 == 0) {
+					round_num_html1.innerHTML = response[response.length-1].round - 1;
+				} else {
+					round_num_html1.innerHTML = response[response.length-1].round;
+				}
+				
+				var round_num_html3 = document.getElementById("round_num3");
+				if(temp+1 == 13) {
+					round_num_html3.innerHTML = response[response.length-1].round + 1;
+				} else {
+					round_num_html3.innerHTML = response[response.length-1].round;
+				}
+				
+				var team_name_html1 = document.getElementById("team_name1");
+				team_name_html1.innerHTML = draft_order[temp-2];
+				leagueInfo.forEach(val1 => {
+					if(draft_order[temp-2] == val1.display_name){
+						const storeContent = document.getElementById('team_pic1');
+						if(val1.metadata.avatar == null) {
+							var team_icon = 'https://styles.redditmedia.com/t5_2t3dhp/styles/communityIcon_73kdw3ry2r3d1.png'
+						} else {
+							var team_icon = val1.metadata.avatar
+						}
+						storeContent.innerHTML = '<img src="'+team_icon+'" alt="'+val1.metadata.team_name+'">'
+					}
+				});
+				
+				var team_name_html3 = document.getElementById("team_name3");
+				team_name_html3.innerHTML = draft_order[temp];
+				leagueInfo.forEach(val1 => {
+					if(draft_order[temp] == val1.display_name){
+						const storeContent = document.getElementById('team_pic3');
+						if(val1.metadata.avatar == null) {
+							var team_icon = 'https://styles.redditmedia.com/t5_2t3dhp/styles/communityIcon_73kdw3ry2r3d1.png'
+						} else {
+							var team_icon = val1.metadata.avatar
+						}
+						storeContent.innerHTML = '<img src="'+team_icon+'" alt="'+val1.metadata.team_name+'">'
+					}
+				});
+
+				
+			}
+				
+
+		}
+    });
+	
+	
+
+	
+	console.log("last draft number was: ");
+}
+function get_prev_pick() {
+	console.log("Previous pick.");
+	$.ajax({
+		type: 'GET',
+		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		success: function(response) {
+			console.log(response.length);
+			console.log(response[response.length-1]);
+			
+			var prev_pick_html = document.getElementById("prev_pick");
+			prev_pick_html.innerHTML = response[response.length-1].metadata.first_name+" "+response[response.length-1].metadata.last_name+"<br>"+response[response.length-1].metadata.position+" - "+response[response.length-1].metadata.team;
+		}
+	});
+}
+get_next_up();
+get_prev_pick();
+</script>

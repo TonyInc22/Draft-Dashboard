@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draft Board</title>
+    <style>
+        .RB {
+            background-color: rgb(115, 195, 166) !important;
+        }
+        .WR {
+            background-color: rgb(70, 161, 201) !important;
+        }
+        .QB {
+            background-color: rgb(191, 93, 132) !important;
+        }
+        .TE {
+            background-color: rgb(205, 139, 78) !important;
+        }
+        .K {
+            background-color: rgb(147, 149, 208) !important;
+        }
+        .DEF {
+            background-color: rgb(151, 95, 78) !important;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            color: #fff;
+            display: grid;
+			grid-template-areas: 
+				"video timer"
+				"draftBoard draftBoard"
+			;
+			grid-template-rows: 50% 50%;
+			grid-column-gap: 10px;
+			grid-row-gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            flex-direction: column; /* Adjust direction for stacking */
+        }
+
+        .draft-container {
+            text-align: center;
+			grid-area: draftBoard;
+			overflow-y: scroll;
+            width: 100%; /* Ensure the container is full width */
+        }
+		
+		.video-container {
+            text-align: center;
+			grid-area: video;
+			width: 100%; /* Ensure the container is full width */
+        }
+		
+		.timer-container {
+            text-align: center;
+			grid-area: timer;
+			width: 100%; /* Ensure the container is full width */
+        }
+
+        .user-icons {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            width: 90%;
+            margin: 0 auto 10px auto;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #1c1c1c; /* Background color for sticky icons */
+            padding: 10px 0; /* Add some padding for spacing */
+        }
+
+        .user-icons img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        .draft-board {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2px;
+            padding: 5px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .player-cell {
+            background-color: #2b2b2b;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .round, .team {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .player-info {
+            font-size: 12px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+	<div class="video-container">
+		<p> hi mom </p>
+	</div>
+	<div class="timer-container">
+		<p> hi dad </p>
+	</div>
+    <div class="draft-container">
+        <!-- User icons above the draft board -->
+        <div class="user-icons" id='usericons'>
+            <!-- Dynamically built -->
+        </div>
+
+        <!-- Draft board grid -->
+        <div class="draft-board" id='draftboard'>
+            <!-- Dynamically built -->
+        </div>
+    	<a href="#top" id='holder_a'>2024 Draft</a>
+	</div>
+
+</body>
+</html>
+    <!-- JS here -->
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/ajax-form.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/scrollIt.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <!-- <script src="js/gijgo.min.js"></script> -->
+    <script src="js/range.js"></script>
+	
+	<!-- QR Code Scanner -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+
+
+    <!--contact js-->
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+<script>
+	var selectedPicks = [];
+	var startingLength = 0;
+$(document).ready(function (e) {
+	var leagueInfo = JSON.parse('[{"avatar":"a9a588d0104b86ddf473e455aeb4348d","display_name":"RithikP","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mention_pn":"on","team_name":"Rithik’s Team"},"settings":null,"user_id":"470015968022622208"},{"avatar":"1aefabfa5b809f39930f5c30e4cb05de","display_name":"TonyInc22","is_bot":false,"is_owner":true,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","archived":"off","avatar":"https://sleepercdn.com/uploads/f8ed17b212f8c49192e918d09c128d85.jpg","mention_pn":"on","team_name":"Steelers Nation Lets Weld"},"settings":null,"user_id":"609877024558870528"},{"avatar":"7621257c126384c37dcb2da126aae7d6","display_name":"Tora2820","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mention_pn":"on","team_name":"Thanks for the donations"},"settings":null,"user_id":"609879805533454336"},{"avatar":"831786149b6b8ed60430ebe518ce8e60","display_name":"HarbaughsaDBag","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","avatar":"https://sleepercdn.com/uploads/0b458a5c70948c9d530b24cf5218ccdd.jpg","mention_pn":"on","team_name":"Playoff Lamar"},"settings":null,"user_id":"728425409204600832"},{"avatar":"3118dc870bd3c09b0ce27feccb5e7f61","display_name":"kirbiegaske","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mascot_message":"off","mention_pn":"on","player_like_pn":"on","player_nickname_update":"off","team_name":"Denny-n-Kirbie","team_name_update":"off","trade_block_pn":"on","transaction_commissioner":"on","transaction_free_agent":"on","transaction_trade":"on","transaction_waiver":"on","user_message_pn":"off"},"settings":null,"user_id":"729378458488164352"},{"avatar":"f0edbf4278f53f9425db175073df6584","display_name":"UrAvgFantasy","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","avatar":"https://sleepercdn.com/uploads/5eabcbb45746636e44d42340f98ecd2f.jpg","mention_pn":"on","team_name":"Levi’s Legion"},"settings":null,"user_id":"729441511070101504"},{"avatar":"f0edbf4278f53f9425db175073df6584","display_name":"munkeric236","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","avatar":"https://sleepercdn.com/images/v2/avatars/avatar_default_green.webp","mention_pn":"on","team_name":"Jack Me Goff"},"settings":null,"user_id":"866107388737007616"},{"avatar":"230d01be0baa3f455592401e0775e2c7","display_name":"MrsStinky07","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","league_report_pn":"on","mascot_message":"on","mention_pn":"on","player_like_pn":"on","player_nickname_update":"on","team_name":"The Pen Is Blue!","team_name_update":"on","trade_block_pn":"on","transaction_commissioner":"on","transaction_free_agent":"on","transaction_trade":"on","transaction_waiver":"on","user_message_pn":"on"},"settings":null,"user_id":"867966756109578240"},{"avatar":"e7af4deab0289b4f5505646424895246","display_name":"alexwhitsell","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","avatar":"https://sleepercdn.com/uploads/55bfb0bafdc614658b0f125f655c9769.jpg","mention_pn":"on","team_name":"Zay My Name"},"settings":null,"user_id":"984647991715856384"},{"avatar":"4f4090e5e9c3941414db40a871e3e909","display_name":"Mikey1670","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","allow_sms":"on","mention_pn":"on","team_name":"Thats what cheesehead"},"settings":null,"user_id":"1103763538251857920"},{"avatar":"15d7cf259bc30eab8f6120f45f652fb6","display_name":"mhanks22","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","avatar":"https://sleepercdn.com/uploads/85f9ff30e88511f66b289717bf6d5675.jpg","mention_pn":"on","team_name":"Bulldogs "},"settings":null,"user_id":"1108211354948857856"},{"avatar":"b3338675f635c2c1f42b469621d38ec6","display_name":"AyeJay07","is_bot":false,"is_owner":null,"league_id":"1090755136630104064","metadata":{"allow_pn":"on","mention_pn":"on","team_name":"Hot Chubb Time Machine"},"settings":null,"user_id":"1122705578033258496"}]');
+	var draft_order = ["UrAvgFantasy", "MrsStinky07", "munkeric236", "kirbiegaske", "TonyInc22", "Tora2820", "HarbaughsaDBag", "AyeJay07", "mhanks22", "alexwhitsell", "RithikP", "Mikey1670"]
+	draft_order.forEach(val => {
+		//console.log(val);
+		leagueInfo.forEach(val1 => {
+			if(val == val1.display_name){
+				//console.log(val1);
+				const storeContent = document.getElementById('usericons');
+				if(val1.metadata.avatar == null) {
+					var team_icon = 'https://styles.redditmedia.com/t5_2t3dhp/styles/communityIcon_73kdw3ry2r3d1.png'
+				} else {
+					var team_icon = val1.metadata.avatar
+				}
+				storeContent.innerHTML += '<img src="'+team_icon+'" alt="'+val1.metadata.team_name+'">'
+			}
+		});
+	});
+
+	var amt_of_total_picks = 12*14; //total number of boxes
+	var round = 0;
+	var pickno = 0;
+	var temp = 0;
+	var round_x = 12;
+	var round_y = 1;
+	for (let i = 0; i < amt_of_total_picks; i++) {
+		var round_temp = parseInt(i) % 12;
+		if(round_temp == 0) {
+			round += 1;
+		}
+		if(temp == 0) {
+			pickno++;
+		} else {
+			pickno--;
+		}
+		if(pickno == 13) {
+			temp = 1;
+			pickno = 12;
+		}
+		if(pickno == 0) {
+			temp = 0;
+			pickno = 1;
+		}
+		var x = i;
+		if(round % 2 == 0) {
+			console.log("round: "+round);
+			//Now we have to flip the order...
+			x = i + round_x - round_y;
+			round_x--;
+			round_y++;
+			console.log(x);
+		} else {
+			round_x = 12;
+			round_y = 1;
+		}
+		const storeContent = document.getElementById('draftboard');
+		storeContent.innerHTML += '<div class="player-cell" style="background-color: rgb(33, 41, 61);" id="'+(x+1)+'">' +
+								'<div class="round">'+round+'.'+pickno+'</div>' +
+								'<a id="'+i+'_a"></>' +
+								//'<div class="team">D. Swift</div>' +
+								'<div class="team" id="'+(x+1)+'_name">TBD</div>' +
+								'<div class="player-info" id="'+(x+1)+'_info"><i>Not yet picked</i></div>' +
+							'</div>';
+	}
+	
+	$.ajax({
+		type: 'GET',
+		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		success: function(response) {
+			console.log(response);
+			startingLength = response.length
+			for(items in response) {
+				let round = response[items].round;
+				let pickno = response[items].pick_no;
+				
+				
+				var html_val = document.getElementById(pickno);
+				let type = response[items].metadata.position
+				html_val.classList.add(response[items].metadata.position);
+				
+				var html_val_name = document.getElementById(pickno+"_name");
+				html_val_name.innerHTML = response[items].metadata.first_name+" "+response[items].metadata.last_name;
+				
+				var html_val_info = document.getElementById(pickno+"_info");
+				html_val_info.innerHTML = response[items].metadata.position+" - "+response[items].metadata.team;
+			}
+			
+			//var html_val = document.getElementById(pick_numb);
+			console.log(response.length);
+			if(response.length - 36 > 0) {
+				window.location = window.location + '#'+(response.length-36)+'_a';
+			}
+		}
+    });
+	
+	
+let timer = function(x) {
+ if(x === 0) {
+	check_updates();
+    //window.location = window.location;
+	timer(5);
+	return;
+ }
+ 
+ return setTimeout(() => {timer(--x)}, 1000)
+}
+	timer(5);
+});	
+function check_updates() {
+	console.log("CHECKING FOR DIFFERENCES: "+startingLength);
+	$.ajax({
+		type: 'GET',
+		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		success: function(response) {
+			if(startingLength != response.length) {
+				refreshpage();
+			}
+		}
+    });
+}
+function refreshpage(){
+	window.location = window.location;
+}
+</script>

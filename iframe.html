@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Pages in One</title>
+    <style>
+	    body {
+            background-color: #1c1c1c;
+            color: #fff;
+        }
+        /* Styling for the layout */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .top {
+            display: flex;
+            flex: 2;
+            gap: 10px;
+        }
+        /* Make the left iframe 75% width and right iframe 25% width */
+        .top iframe:first-child {
+            flex: 1.5;
+        }
+        .top iframe:last-child {
+            flex: 1;
+        }
+        .bottom {
+            flex: 1;
+            margin-top: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top">
+            <!-- Embed the first page (left) -->
+            <iframe src="youtube.html"></iframe>
+            <!-- Embed the second page (right) -->
+            <iframe src="timer.html"></iframe>
+        </div>
+        <div class="bottom">
+            <!-- Embed the third page (bottom) -->
+            <iframe src="index.html"></iframe>
+        </div>
+    </div>
+</body>
+</html>
