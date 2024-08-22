@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+
+    <script src="Draft-Dashboard.js"></script>
+    <link rel="stylesheet" href="Draft-Dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Fantasy Football Draft</title>
+</head>
+<body>
+    <div id="timerModal" class="modal">
+        <div class="modal-content">
+            <h1>Draft Starts In:</h1>
+            <div class="draftTimer">
+                <div>
+                    <div class="Days draftTime"></div>
+                    <div>Days</div>
+                </div>
+                <div>
+                    <div class="Hours draftTime"></div>
+                    <div>Hours</div>
+                </div>
+                <div>
+                    <div class="Minutes draftTime"></div>
+                    <div>Minutes</div>
+                </div>
+                <div>
+                    <div class="Seconds draftTime"></div>
+                    <div>Seconds</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="videoContainer"></div>
+        <div class="timerContainer">
+            <div class="pickCard prevPickCard"></div>
+            <div class="pickCard currPickCard"></div>
+            <div class="pickCard nextPickCard"></div>
+        </div>
+        <div class="dashboardContainer"></div>
+    </div>
+</body>
+</html>
