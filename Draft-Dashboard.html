@@ -19,7 +19,8 @@
 <body>
     <div id="timerModal" class="modal">
         <div class="modal-content">
-            <h1>Draft Starts In:</h1>
+            <h1>The Fantasy Football League</h1>
+            <hr>
             <div class="draftTimer">
                 <div>
                     <div class="Days draftTime"></div>
@@ -43,9 +44,60 @@
     <div class="container">
         <div class="videoContainer"></div>
         <div class="timerContainer">
-            <div class="pickCard prevPickCard"></div>
-            <div class="pickCard currPickCard"></div>
-            <div class="pickCard nextPickCard"></div>
+            <div class="pickCard prevPickCard">
+                <div class="pickAvatar"></div>
+                <div class="pickHeader">
+                    <div class="pickHeaderChild">
+                        <div>ROUND:</div>
+                        <div class="pickRoundNumber"></div>
+                    </div>
+                    <div class="pickHeaderChild">
+                        <div>PICK:</div>
+                        <div class="pickIDNumber"></div>
+                    </div>
+                </div>
+                <div class="pickInfo">
+                    <div class="pickPlayerAvatar"></div>
+                    <div class="textInfo">
+                        <div class="pickPlayer"></div>
+                        <div class="pickPlayerInfo"></div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="pickCard currPickCard">
+                <div class="pickAvatar"></div>
+                <div class="pickHeader">
+                    <div class="pickHeaderChild">
+                        <div>ROUND:</div>
+                        <div class="pickRoundNumber"></div>
+                    </div>
+                    <div class="pickHeaderChild">
+                        <div>PICK:</div>
+                        <div class="pickIDNumber"></div>
+                    </div>
+                </div>
+                <div class="pickInfo">
+                    <div>ON THE CLOCK</div>
+                    <hr>
+                    <div class="pickTime"></div>
+                </div>
+            </div>
+            <div class="pickCard nextPickCard">
+                <div class="pickAvatar"></div>
+                <div class="pickHeader">
+                    <div class="pickHeaderChild">
+                        <div>ROUND:</div>
+                        <div class="pickRoundNumber"></div>
+                    </div>
+                    <div class="pickHeaderChild">
+                        <div>PICK:</div>
+                        <div class="pickIDNumber"></div>
+                    </div>
+                </div>
+                <div class="pickInfo">
+                    <div style="font-size: 1.5em;">UP NEXT</div>
+                </div>
+            </div>
         </div>
         <div class="dashboardContainer"></div>
     </div>

@@ -227,16 +227,16 @@ function get_next_up() {
 	
 	$.ajax({
 		type: 'GET',
-		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		url: 'https://api.sleeper.app/v1/draft/1131459340524851200/picks',
 		success: function(response) {
 			console.log(response);
-			console.log(response[response.length-1].pick_no);
+			// console.log(response[response.length-1].pick_no);
 
-			console.log(response[response.length-1].round);
+			// console.log(response[response.length-1].round);
 				var round_num_html = document.getElementById("round_num");
 				round_num_html.innerHTML = response[response.length-1].round;
 				
-			console.log(response.length);
+			// console.log(response.length);
 			var temp = 0;
 			var holder = 1;
 			for (let i = 1; i < response.length; i++) {
@@ -252,7 +252,7 @@ function get_next_up() {
 					holder = 1;
 					temp = 1;
 				}
-				console.log(temp);
+				// console.log(temp);
 				var pick_num_html = document.getElementById("pick_num");
 				pick_num_html.innerHTML = temp;
 				
@@ -342,16 +342,16 @@ function get_next_up() {
 	
 
 	
-	console.log("last draft number was: ");
+	// console.log("last draft number was: ");
 }
 function get_prev_pick() {
-	console.log("Previous pick.");
+	// console.log("Previous pick.");
 	$.ajax({
 		type: 'GET',
-		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		url: 'https://api.sleeper.app/v1/draft/1131459340524851200/picks',
 		success: function(response) {
 			console.log(response.length);
-			console.log(response[response.length-1]);
+			// console.log(response[response.length-1]);
 			
 			var prev_pick_html = document.getElementById("prev_pick");
 			prev_pick_html.innerHTML = response[response.length-1].metadata.first_name+" "+response[response.length-1].metadata.last_name+"<br>"+response[response.length-1].metadata.position+" - "+response[response.length-1].metadata.team;

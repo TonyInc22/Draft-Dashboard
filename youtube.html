@@ -73,7 +73,7 @@
 				
 				var prev_pick = response[response.length-1].metadata.first_name.toLowerCase()+"-"+response[response.length-1].metadata.last_name.toLowerCase();
 				console.log(prev_pick);
-				//new_video(prev_pick);
+				new_video(prev_pick);
 				$('#new_name').attr('src', 'https://www.fantasypros.com/nfl/players/'+prev_pick+'.php#top');
 				$('.ot-sdk-row').hide();
 			}

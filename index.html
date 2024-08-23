@@ -182,12 +182,12 @@ $(document).ready(function (e) {
 		}
 		var x = i;
 		if(round % 2 == 0) {
-			console.log("round: "+round);
+			// console.log("round: "+round);
 			//Now we have to flip the order...
 			x = i + round_x - round_y;
 			round_x--;
 			round_y++;
-			console.log(x);
+			// console.log(x);
 		} else {
 			round_x = 12;
 			round_y = 1;
@@ -204,9 +204,9 @@ $(document).ready(function (e) {
 	
 	$.ajax({
 		type: 'GET',
-		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		url: 'https://api.sleeper.app/v1/draft/1131459340524851200/picks',
 		success: function(response) {
-			console.log(response);
+			console.log('response: '+response);
 			startingLength = response.length
 			for(items in response) {
 				let round = response[items].round;
@@ -225,7 +225,7 @@ $(document).ready(function (e) {
 			}
 			
 			//var html_val = document.getElementById(pick_numb);
-			console.log(response.length);
+			// console.log(response.length);
 			if(response.length - 36 > 0) {
 				window.location = window.location + '#'+(response.length-36)+'_a';
 			}
@@ -249,7 +249,7 @@ function check_updates() {
 	console.log("CHECKING FOR DIFFERENCES: "+startingLength);
 	$.ajax({
 		type: 'GET',
-		url: 'https://api.sleeper.app/v1/draft/1129801679752364032/picks',
+		url: 'https://api.sleeper.app/v1/draft/1131459340524851200/picks',
 		success: function(response) {
 			if(startingLength != response.length) {
 				refreshpage();

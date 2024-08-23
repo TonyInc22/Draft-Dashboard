@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class WebServer2 {
+public class ScrapeWeb {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         ServerSocket serverSocket = new ServerSocket(8080);
