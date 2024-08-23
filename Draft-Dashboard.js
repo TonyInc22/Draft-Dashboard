@@ -90,7 +90,7 @@ function getPicks() {
 		url: 'https://api.sleeper.app/v1/draft/'+testDraft+'/picks',
         async: true,
 		success: function(data) {
-			console.log('Picks: ', data);
+			// console.log('Picks: ', data);
             if (!data || !data.length) return;
 
             lastPick = data[data.length-1];
