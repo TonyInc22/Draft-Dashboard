@@ -17,6 +17,8 @@
     <title>2024 Fantasy Football Draft</title>
 </head>
 <body>
+    <!-- Audio element -->
+    <audio hidden id="PickIsInAudio" src="pick_is_in_audio.m4a"></audio>
     <div id="timerModal" class="modal">
         <div class="modal-content">
             <h1>The Fantasy Football League</h1>
@@ -42,7 +44,10 @@
         </div>
     </div>
     <div class="container">
-        <div class="videoContainer"></div>
+        <div class="videoContainer">
+            <iframe frameborder="0" allowfullscreen id="highlightVideo" src="" frameborder="0"></iframe>
+            <img id="defensePic" hidden src="" style="height: 100%;animation: zoom-in-zoom-out 2.5s linear infinite;">
+        </div>
         <div class="timerContainer">
             <div class="pickCard prevPickCard">
                 <div class="pickAvatar"></div>

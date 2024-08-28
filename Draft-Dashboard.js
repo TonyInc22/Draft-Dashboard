@@ -1,7 +1,9 @@
-var currPick = '0-12';
 const league = '1090755136630104064';
 const draft = '1090755136630104065';
-const testDraft = '1132671922631929856';
+const testDraft = '1133971010526781440';
+var apiKey;
+
+var currPick = '0-12';
 var timerInterval;
 var pickTimer;
 var lastPick;
@@ -10,8 +12,12 @@ var breakLoop = false;
 
 $(prepareBoard)
 
+getAPI = () => $.get( "apiKey.txt", data => apiKey = data);
+
 // Pull all league users and fill the draft board with the results
 function prepareBoard() {
+    getAPI();
+
     $.ajax({
 		type: 'GET',
 		url: 'https://api.sleeper.app/v1/draft/'+draft,
@@ -152,6 +158,8 @@ function incrementPick() {
 
     // End the draft beacuse we have ran out of draft picks
     if (row === 15) return true;
+
+    if (lastPick) getVideo(lastPick.metadata.first_name+' '+lastPick.metadata.last_name, lastPick.player_id)
     
     // Add the 'On The Clock' text and format the container
     $('.pickContainer#'+currPick)
@@ -215,24 +223,28 @@ function getColor(position) {
 }
 
 function updatePickTimer() {
-    if (!lastPick) return;
+    var pickNo = lastPick ? lastPick.pick_no : 0;
 
-    var pickNo = lastPick.pick_no;
+    if (lastPick) {
+        $('#PickIsInAudio')[0].play();
 
-    var playerAvatar = 'https://sleepercdn.com/content/nfl/players/thumb/'+lastPick.metadata.player_id+'.jpg';
-    if (!/\d+/.test(lastPick.metadata.player_id)) {
-        playerAvatar = "https://sleepercdn.com/images/team_logos/nfl/"+lastPick.metadata.team.toLowerCase()+".png"
+        $('.prevPickCard').css('opacity',1)
+
+        var playerAvatar = 'https://sleepercdn.com/content/nfl/players/thumb/'+lastPick.metadata.player_id+'.jpg';
+        if (!/\d+/.test(lastPick.metadata.player_id)) {
+            playerAvatar = "https://sleepercdn.com/images/team_logos/nfl/"+lastPick.metadata.team.toLowerCase()+".png"
+        }
+        var userAvatar = 'https://sleepercdn.com/landing/web2021/img/sleeper-app-logo-2.png';
+        if (userAvatars[lastPick.picked_by]) {
+            userAvatar = 'https://sleepercdn.com/avatars/thumbs/' + userAvatars[lastPick.picked_by].avatar;
+        }
+        $('.pickCard:first-child').find('.pickAvatar').html('<img src="'+userAvatar+'">')
+        $('.pickCard:first-child').find('.pickRoundNumber').text(lastPick.round)
+        $('.pickCard:first-child').find('.pickIDNumber').text(pickNo)
+        $('.pickCard:first-child').find('.pickPlayer').text(lastPick.metadata.first_name[0]+'. '+lastPick.metadata.last_name)
+        $('.pickCard:first-child').find('.pickPlayerInfo').text(lastPick.metadata.position+' - '+lastPick.metadata.team+' ('+getBye(lastPick.metadata.team)+')')
+        $('.pickCard:first-child').find('.pickPlayerAvatar').html('<img src="'+playerAvatar+'"></img>')
     }
-    var userAvatar = 'https://sleepercdn.com/landing/web2021/img/sleeper-app-logo-2.png';
-    if (userAvatars[lastPick.picked_by]) {
-        userAvatar = 'https://sleepercdn.com/avatars/thumbs/' + userAvatars[lastPick.picked_by].avatar;
-    }
-    $('.pickCard:first-child').find('.pickAvatar').html('<img src="'+userAvatar+'">')
-    $('.pickCard:first-child').find('.pickRoundNumber').text(lastPick.round)
-    $('.pickCard:first-child').find('.pickIDNumber').text(pickNo)
-    $('.pickCard:first-child').find('.pickPlayer').text(lastPick.metadata.first_name[0]+'. '+lastPick.metadata.last_name)
-    $('.pickCard:first-child').find('.pickPlayerInfo').text(lastPick.metadata.position+' - '+lastPick.metadata.team+' ('+getBye(lastPick.metadata.team)+')')
-    $('.pickCard:first-child').find('.pickPlayerAvatar').html('<img src="'+playerAvatar+'"></img>')
 
     for (i = 1; i < 3; i++) {
         pickNo += 1;
@@ -257,7 +269,7 @@ function updatePickTimer() {
 
     var currRound = Number($('.pickCard:eq(1)').find('.pickRoundNumber').text());
     var draftTime = currRound > 3 ? 3 : 5;
-    var seconds = draftTime * 60; // THIS IS FOR TESTING PURPOSES, THE COMMENTED ONE ABOVE IS THE REAL TIME UNTIL THE DRAFT
+    var seconds = draftTime * 60;
     function timer() {
         var days        = Math.floor(seconds/24/60/60);
         var hoursLeft   = Math.floor((seconds) - (days*86400));
@@ -266,16 +278,34 @@ function updatePickTimer() {
         var minutes     = Math.floor(minutesLeft/60);
         var remainingSeconds = Math.floor(seconds % 60);
 
-        $('.pickTime').text(minutes+':'+((remainingSeconds + '').length < 2 ? ('0' + remainingSeconds) : remainingSeconds))
+        if (seconds === -1) {
+            $('.pickTime').text('0:00')
+        } else {
+            $('.pickTime').text(minutes+':'+((remainingSeconds + '').length < 2 ? ('0' + remainingSeconds) : remainingSeconds))
+        }
 
         if (seconds === -1) {
             clearInterval(pickTimer);
-            $('.modal').remove();
-            incrementPick();
-            getPicks();
         } else {
             seconds--;
         }
     }
     pickTimer = setInterval(timer, 1000);
+}
+
+function getVideo(player, playerID) {
+    if (!isNaN(playerID)) {
+        console.log('Getting Video For '+player);
+        fetch("https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&q="+encodeURIComponent(player.replace(/[!'()*]/g,'')+" college highlights")+"&videoDefinition=high&videoEmbeddable=true&type=video&key="+apiKey)
+        .then((response) => response.text())
+        .then((data) => {
+            console.log(JSON.parse(data))
+            var vid = JSON.parse(data).items.find(ytVid => ytVid.snippet.channelTitle !== 'NFL Throwback')
+            $('#defensePic').hide();
+            $('#highlightVideo').show().attr('src','https://www.youtube.com/embed/'+vid.id.videoId+'?autoplay=1&controls=0&mute=1&start=20');
+        }).catch(getAPI)
+    } else {
+        $('#highlightVideo').hide();
+        $('#defensePic').show().attr('src','https://static.www.nfl.com/t_headshot_desktop/f_auto/league/api/clubs/logos/'+playerID)
+    }
 }

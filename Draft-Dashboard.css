@@ -6,9 +6,20 @@ body {
     background-color: #030616;
     color: #fff;
 }
+@keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.15, 1.15);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
 .modal {
-    /* display: block; */
-    display: none;
+    display: block;
+    /* display: none; */
     position: fixed;
     z-index: 10;
     left: 0;
@@ -243,6 +254,8 @@ body {
 }
 .videoContainer {
     grid-area: video;
+    padding: 15px 0px 25px 10px;
+    text-align: center;
 }
 .timerContainer {
     grid-area: timer;
@@ -264,9 +277,10 @@ body {
 }
 .prevPickCard {
     .pickInfo, .textInfo {
-        font-size: 1.25em;
+        font-size: 1.15em;
         flex-grow: 1;
     }
+    opacity: 0;
 }
 .currPickCard {
     .pickInfo {
@@ -274,6 +288,9 @@ body {
     }
     .pickAvatar {
         flex-grow: 2;
+    }
+    .pickHeaderChild {
+        font-size: 1.5em;
     }
     border-style: outset !important;
     flex-grow: 3;
@@ -355,4 +372,10 @@ body {
     padding: 10px;
     border-radius: 20px;
     border: 2px outset #0dbcaa;
+}
+#highlightVideo {
+    width: 100%;
+    height: 125%;
+    bottom: 85px;
+    position: relative;
 }
